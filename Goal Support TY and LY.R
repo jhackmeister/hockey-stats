@@ -20,7 +20,7 @@ GFplot <- ggplot(ty, aes(x = reorder(paste(Player, "(", Team, GP, ")", sep = " "
   labs(title = "Goal Support", x = "Goalie (Team, Games Played)", y = "Goals Scored per Game", subtitle = "Minimum 4 GP") +
   theme_minimal() +
   theme(legend.position = "none") +
-  annotate("text", x = 6, y = 4 , label = "Data from Natural Stat Trick 2024-11-16", color = "darkred", size = 3) 
+  annotate("text", x = 6, y = 4 , label = "Data from Natural Stat Trick", color = "darkred", size = 3) 
 
 GFplot
 
