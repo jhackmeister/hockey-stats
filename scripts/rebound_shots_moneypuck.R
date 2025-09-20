@@ -83,7 +83,25 @@ rebound_shots %>%
     title = "Regular Season Rebound Shot Attempts",
     subtitle = "Attempts less than 2 seconds after previous shot",
     x = "Team",
-    y = "Goal Count"
+    y = "Shot Count"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "none")
+
+rebound_shots %>% 
+  filter(
+    is_playoff_game == 0,
+    situation == '5 v 5') %>%
+  ggplot(aes(x = fct_infreq(team_code), fill = team_code == "SEA")) + 
+  geom_bar() +
+  scale_fill_manual(values = c("FALSE" = "gray", "TRUE" = "#95d7d8")) +
+  labs(
+    title = "2024-25 Regular Season 5v5 Rebound Shot Attempts",
+    subtitle = "Attempts less than 2 seconds after previous shot.
+    Data from MoneyPuck",
+    x = "Team",
+    y = "Shot Count"
   ) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1),
