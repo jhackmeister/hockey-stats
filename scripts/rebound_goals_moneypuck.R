@@ -33,6 +33,29 @@ ggplot(rebounds_24, aes(
   geom_point(size = 3) +
   geom_text(aes(label = team), vjust = -0.5, size = 3) +
   scale_color_manual(values = team_colors_main) +
+  geom_vline()
   theme_minimal()
 
-
+  
+ggplot(rebounds_24, aes(
+    x = total_rebound_goals_for,
+    y = total_rebound_goals_against,
+    color = team
+  )) +
+    geom_point(size = 3) +
+    geom_text(aes(label = team), vjust = -0.5, size = 3) +
+    geom_vline(xintercept = 32, linetype = "dashed", color = "black") +
+    geom_hline(yintercept = 32, linetype = "dashed", color = "black") +
+    scale_color_manual(values = team_colors_main) +
+    theme_minimal() +
+    theme(legend.position = "none") +
+    labs(
+      title = "2024-25 Rebound Goals by Team",
+      subtitle = "Data from MoneyPuck",
+      x = "Rebound Goals For",
+      y = "Rebond Goals Against"
+    ) +
+  annotate("text", x = 25, y = 25, label = "Need More Finishers", color = "gray", size = 5) +
+  annotate("text", x = 25, y = 42, label = "Clear Your Crease", color = "gray", size = 5) +
+  annotate("text", x = 42, y = 25, label = "Opportunistic", color = "gray", size = 5) +
+  annotate("text", x = 42, y = 42, label = "Chaos Agents", color = "gray", size = 5) 

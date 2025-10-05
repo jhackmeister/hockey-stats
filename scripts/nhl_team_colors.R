@@ -2,7 +2,7 @@
 library(tidyverse)
 
 nhl_team_colors <- tibble::tribble(
-  ~team_code, ~full_name, ~main_color, ~secondary_color, ~ice_blue, ~text_color,
+  ~team, ~full_name, ~main_color, ~secondary_color, ~ice_blue, ~text_color,
   "ANA", "Anaheim Ducks", "#FC4C02", "#B6985A", "#CF45210", "white",
   "ARI", "Arizona Coyotes", "#98012E", "#e2d6b5", "#e2d6b5", "white",
   "BOS", "Boston Bruins", "#fcb514", "#000000", "#FFB81C", "black",
@@ -42,3 +42,6 @@ nhl_team_colors <- tibble::tribble(
 team_colors_main <- setNames(nhl_team_colors$main_color, nhl_team_colors$team_code)
 team_colors_secondary <- setNames(nhl_team_colors$secondary_color, nhl_team_colors$team_code)
 team_colors_accent <- setNames(nhl_team_colors$ice_blue, nhl_team_colors$team_code)
+
+team_color_vector <- setNames(nhl_team_colors$main_color, nhl_team_colors$team)
+team_color_vector

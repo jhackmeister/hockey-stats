@@ -2,22 +2,22 @@ library(tidyverse)
 
 #data from Natural Stat Trick https://www.naturalstattrick.com/playerteams.php?fromseason=20242025&thruseason=20242025&stype=2&sit=all&score=all&stdoi=oi&rate=n&team=ALL&pos=G&loc=B&toi=0&gpfilt=none&fd=&td=&tgp=410&lines=multi&draftteam=ALL
 
-# This seasons data
-ty <- read.csv("NST_20242025.csv")
+# Last seasons data
+ly <- read.csv("data/NST_20242025.csv")
 
-ty <- ty %>%
-  filter(GP > 3) %>%  # Move the filter first
+ly <- ly %>%
+  filter(GP > 20) %>%  # Move the filter first
   mutate(
     GFperGP = round(GF / GP, 2),
     xGFperGP = round(xGF / GP, 2)
   )
-hist(ty$GP)
+hist(ly$GP)
 
-GFplot <- ggplot(ty, aes(x = reorder(paste(Player, "(", Team, GP, ")", sep = " "), GFperGP), y = GFperGP, fill = ifelse(Team == "SEA", "SEA", "other"))) +
+GFplot <- ggplot(ly, aes(x = reorder(paste(Player, "(", Team, GP, ")", sep = " "), GFperGP), y = GFperGP, fill = ifelse(Team == "SEA", "SEA", "other"))) +
   geom_bar(stat = "identity") +
   scale_fill_manual(values = c("SEA" = "#68A2B9", "other" = "gray")) +
   coord_flip() +
-  labs(title = "Goal Support", x = "Goalie (Team, Games Played)", y = "Goals Scored per Game", subtitle = "Minimum 4 GP") +
+  labs(title = "Goal Support", x = "Goalie (Team, Games Played)", y = "Goals Scored per Game", subtitle = "Minimum 20 GP") +
   theme_minimal() +
   theme(legend.position = "none") +
   annotate("text", x = 6, y = 4 , label = "Data from Natural Stat Trick", color = "darkred", size = 3) 
@@ -25,7 +25,7 @@ GFplot <- ggplot(ty, aes(x = reorder(paste(Player, "(", Team, GP, ")", sep = " "
 GFplot
 
 
-xGFplot <- ggplot(ty, aes(x = reorder(paste(Player, "(", Team, GP, ")", sep = " "), xGFperGP), y = xGFperGP, fill = ifelse(Team == "SEA", "SEA", "other"))) +
+xGFplot <- ggplot(ly, aes(x = reorder(paste(Player, "(", Team, GP, ")", sep = " "), xGFperGP), y = xGFperGP, fill = ifelse(Team == "SEA", "SEA", "other"))) +
   geom_bar(stat = "identity") +
   scale_fill_manual(values = c("SEA" = "#68A2B9", "other" = "gray")) +
   coord_flip() +
@@ -36,27 +36,27 @@ xGFplot <- ggplot(ty, aes(x = reorder(paste(Player, "(", Team, GP, ")", sep = " 
 xGFplot
 
 #2023-2024 season
-stats <- read.csv("NST_20232024.csv")
+stats <- read.csv("data/NST_20232024.csv")
 
-twentygames <- stats %>%
+season_2324 <- stats %>%
   filter(GP > 20)
 
 #gf per game
-twentygames <- twentygames %>%
+season_2324 <- twentygames %>%
   mutate(GFpergame = round(GF / GP, 2)) %>%
   arrange(desc(GFpergame))
 
 # Last Season Charts
-ggplot(twentygames, aes(x=Player, y=GFpergame)) +
+ggplot(season_2324, aes(x=Player, y=GFpergame)) +
   geom_bar(stat="identity")+
   coord_flip()
 
-ggplot(twentygames, aes(x = reorder(Player, GFpergame), y = GFpergame)) +
+ggplot(season_2324, aes(x = reorder(Player, GFpergame), y = GFpergame)) +
   geom_bar(stat = "identity") +
   coord_flip() +
   labs(title = "GF per Game by Player", x = "Player", y = "GF per Game")
 
-ggplot(twentygames, aes(x = reorder(Player, GFpergame), y = GFpergame, fill = ifelse(Team == "SEA", "SEA", "Other"))) +
+ggplot(season_2324, aes(x = reorder(Player, GFpergame), y = GFpergame, fill = ifelse(Team == "SEA", "SEA", "Other"))) +
   geom_bar(stat = "identity") +
   scale_fill_manual(values = c("SEA" = "red", "Other" = "gray")) + # Colors for SEA and other teams
   coord_flip() +

@@ -4,8 +4,9 @@ library(tidyverse)
 library(teamcolors)
 library(ggimage)
 
+
 # Data from Natural Stat Trick https://www.naturalstattrick.com/teamtable.php?fromseason=20242025&thruseason=20242025&stype=2&sit=5v5&score=all&rate=n&team=all&loc=B&gpf=410&fd=&td=
-nst_teams <- read.csv('2024.25_NST_teams.csv')
+nst_teams <- read.csv('data/2024.25_NST_teams.csv')
 
 # Create nhl_teams df 
 nhl_teams <- teamcolors %>%
