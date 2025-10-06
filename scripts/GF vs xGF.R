@@ -22,12 +22,13 @@ nhl_logos <- nhl_teams %>%
 
 # Manually add SEA and UTA
 new_rows <- data.frame(
-  name = c("Seattle Kraken", "Utah Hockey Club"),
+  name = c("Seattle Kraken", "Utah Mammoth"),
   primary = c("#001628", "#71AFE5"),  # Replace with the desired color codes
-  logo = c("https://content.sportslogos.net/logos/1/6740/full/seattle_kraken_logo_primary_20226314.png", "https://content.sportslogos.net/logos/1/6902/full/utah_hockey_club_logo_primary_2025_sportslogosnet-8095.png")  # Replace with the actual file paths or URLs to logos
+  logo = c("https://content.sportslogos.net/logos/1/6740/full/seattle_kraken_logo_primary_20226314.png", 
+           "https://www.sportslogos.net/logos/view/694433562026/Utah-Mammoth-Logo/2026/Primary-Logo")
 )
-
 nhl_logos <- rbind(nhl_logos, new_rows)
+write.csv2(nhl_logos, "data/nhl_logos.csv")
 
 # Add a column to indicate whether a team has a logo
 nst_teams <- nst_teams %>%

@@ -43,5 +43,4 @@ team_colors_main <- setNames(nhl_team_colors$main_color, nhl_team_colors$team_co
 team_colors_secondary <- setNames(nhl_team_colors$secondary_color, nhl_team_colors$team_code)
 team_colors_accent <- setNames(nhl_team_colors$ice_blue, nhl_team_colors$team_code)
 
-team_color_vector <- setNames(nhl_team_colors$main_color, nhl_team_colors$team)
-team_color_vector
+write.csv2(team_color_vector, "data/team_primary_colors.csv")
