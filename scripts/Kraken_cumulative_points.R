@@ -1,5 +1,6 @@
 library(rvest)
 library(tidyverse)
+library(readxl)
 
 # Scrape 2026 season
 # URL of the page
@@ -74,10 +75,18 @@ names(season_colors) <- unique(all_kraken_games$season)
 season_colors["2023"] <- "#001628"  # playoff season
 season_colors["2026"] <- "#e9072b"  # current season
 
+kraken_colors <- c(
+  "2022" = "#001628",
+  "2023" = "#FF681D",
+  "2024" = "#68a2b9",
+  "2025" = "#99d9d9",
+  "2026" = "#e9072b"
+)
+
 # Create the plot for points
 ggplot(all_kraken_games, aes(x = gp, y = cumulative_points, color = season)) +
   geom_line(linewidth = 1.3) +
-  scale_color_manual(values = season_colors) +
+  scale_color_manual(values = kraken_colors) +
   theme_minimal() +
   labs(
     title = "Kraken Running Points by Season",
@@ -90,116 +99,72 @@ ggplot(all_kraken_games, aes(x = gp, y = cumulative_points, color = season)) +
 ggplot(all_kraken_games, aes(x = gp, y = goal_dff, color = season)) +
   geom_line(linewidth = 1.3) +
   geom_hline(yintercept = 0, linetype = "dashed", color = "black") +
-  scale_color_manual(values = season_colors) +
+  scale_color_manual(values = kraken_colors) +
   theme_minimal() +
   labs(
     title = "Kraken Running Goal Differential by Season",
     subtitle = "Data from Hockey Reference",
     x = "Games Played",
-    y = "Differential"
+    y = "Differential",
+    caption = "@jhackmeister.bsky.social"
   )
+
+
+# Prepare data for labeling: get the last point of each season
+label_data <- all_kraken_games %>%
+  filter(gp < (nrow(kraken_table) + 2)) %>%
+  group_by(season) %>%
+  slice_max(order_by = gp, n = 1)
 
 # Points percentage
 ggplot(all_kraken_games, aes(x = gp, y = points_perc, color = season)) +
   geom_line(linewidth = 1.3) +
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "black") +
-  scale_color_manual(values = season_colors) +
+  scale_color_manual(values = kraken_colors) +
   theme_minimal() +
   labs(
     title = "Kraken Running Points Percentage by Season",
     subtitle = "Data from Hockey Reference",
     x = "Games Played",
-    y = "Points Percentage"
+    y = "Points Percentage",
+    caption = "@jhackmeister.bsky.social"
   )
 
-###########################
-# Pacific Division Scrape #
-###########################
-
-# Function to scrape one team's season
-scrape_season <- function(team) {
-  url <- paste0("https://www.hockey-reference.com/teams/", team, "/2026_games.html") 
-  page <- read_html(url)
-  
-  table <- page %>%
-    html_node("table#games") %>%
-    html_table() %>%
-    as_tibble(.name_repair = "unique") %>%
-    mutate(team = team)  # Add team column for reference
-  
-  return(table)
-}
-
-# Vector of teams
-pac_teams <- c("ANA", "CGY", "EDM", "LAK", "SJS", "SEA", "VAN", "VEG")
-
-# Combine all teams into one data frame
-pacific_div <- map_df(pac_teams, scrape_season)
-
-# Clean up
-pac_div <- pacific_div %>% 
-  rename(
-    location = ...4,
-    result = ...8,
-    game_length = ...9
-  ) %>% 
-  filter(!is.na(GF)) %>% 
-  mutate(team = ifelse(team == "VEG", "VGK", team)) %>% 
-  mutate(
-    location = ifelse(location == "@", "away", "home"),
-    game_length = ifelse(game_length == "", "REG", game_length)) %>%
-  mutate(
-    Points = case_when(
-      result == "W" ~ 2,
-      !is.na(game_length) & game_length != "REG" ~ 1,
-      TRUE ~ 0
-    )
-  ) %>% 
-  mutate(
-    game_date = ymd(Date),  # Convert to Date format
-    season = if_else(
-      month(game_date) >= 10,
-      paste0(year(game_date), "–", substr(year(game_date) + 1, 3, 4)),
-      paste0(year(game_date) - 1, "–", substr(year(game_date), 3, 4))
-    )
-  ) %>% 
-  group_by(team) %>%
-  arrange(game_date) %>%  # Ensure games are in chronological order
-  mutate(cumulative_points = cumsum(Points)) %>%
-  ungroup() %>% 
-  janitor::clean_names()
-
-
-# Prepare data for labels: last game per team
-label_data <- pac_div %>%
-  group_by(team) %>%
-  filter(gp == max(gp)) %>%
-  ungroup()
-
-# Prep team colors for plot
-team_color_vector <- read.csv("data/team_primary_colors.csv")
-team_colors <- setNames(team_color_vector$main_color, team_color_vector$team)
-
-
-# Create the plot
-ggplot(pac_div, aes(x = gp, y = cumulative_points, color = team)) +
+# Running Points TY + 5 games
+all_kraken_games %>% 
+  filter(gp < (nrow(kraken_table) + 5)) %>% 
+ggplot(aes(x = gp, y = cumulative_points, color = season)) +
   geom_line(linewidth = 1.3) +
   geom_text(
     data = label_data,
-    aes(label = team),
-    hjust = -0.1,  # Push labels slightly to the right
-    size = 4,
+    aes(label = season),
+    hjust = -0.1,  # nudges label slightly to the right
     show.legend = FALSE
   ) +
-  scale_color_manual(values = team_colors) +
+  scale_color_manual(values = kraken_colors) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 5)) +
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 5)) +
   theme_minimal() +
   theme(legend.position = "none") +
   labs(
-    title = "2025-26 Pacific Division Standings",
+    title = "Kraken Point Totals by Season - TY GP +5",
     subtitle = "Data from Hockey Reference",
     x = "Games Played",
-    y = "Points Total"
-  ) #+
-  #geom_hline(yintercept = 96, color = "red", linetype = "dashed")+
-  #annotate("text", x = 2, y = 94, label = "2024-25 Playoff Cutoff", color = "red", size = 3) +
-  #xlim(0, max(pac_div$gp) + 5)  # Add space for labels
+    y = "Point Total",
+    caption = "@jhackmeister.bsky.social"
+  )
+
+# full season 
+ggplot(all_kraken_games, aes(x = gp, y = cumulative_points, color = season)) +
+  geom_line(linewidth = 1.3) +
+  scale_color_manual(values = kraken_colors) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 5)) +
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 5)) +
+  theme_minimal() +
+  labs(
+    title = "Kraken Point Totals by Season",
+    subtitle = "Data from Hockey Reference",
+    x = "Games Played",
+    y = "Point Total",
+    caption = "@jhackmeister.bsky.social"
+  )

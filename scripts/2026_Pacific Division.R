@@ -66,10 +66,11 @@ pac_div <- pacific_div %>%
 
 
 # Prep team colors for plot
-team_color_vector <- read.csv("data/team_primary_colors.csv")
+team_color_vector <- read.csv("data/team_colors.csv")
 team_colors <- setNames(team_color_vector$main_color, team_color_vector$team)
-logos <- read.csv("data/nhl_logos.csv")
-team_logos <- setNames(logos$logo, logos$Team)
+team_colors["SEA"] <- "#99d9d9"
+logos <- as_tibble(read.csv("data/nhl_logos.csv"))
+team_logos <- setNames(logos$logo, logos$team)
 
 
 label_data <- pac_div %>%
@@ -90,13 +91,19 @@ ggplot(pac_div, aes(x = gp, y = cumulative_points, color = team)) +
     inherit.aes = FALSE
   ) +
   scale_color_manual(values = team_colors) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 5)) +
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 5)) +
   theme_minimal() +
+  theme(plot.title = element_text(color = "#355464", face = 'bold'),
+        plot.caption = element_text(color = "#68a2b9", face = 'bold'),
+        plot.subtitle = element_text(color = "#68a2b9", face = 'bold')) +
   theme(legend.position = "none") +
   labs(
     title = "2025-26 Pacific Division Standings",
     subtitle = "Data from Hockey Reference",
     x = "Games Played",
-    y = "Points Total"
+    y = "Points Total",
+    caption = "@jhackmeister.bsky.social"
   )
 
 ggplot(pac_div, aes(x = gp, y = points_perc, color = team)) +
@@ -111,13 +118,16 @@ ggplot(pac_div, aes(x = gp, y = points_perc, color = team)) +
   ) +
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "black") +
   scale_color_manual(values = team_colors) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 5)) +
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 10)) +
   theme_minimal() +
   theme(legend.position = "none") +
   labs(
     title = "2025-26 Pacific Division Standings by Points Percentage",
     subtitle = "Data from Hockey Reference",
     x = "Games Played",
-    y = "Points Total"
+    y = "Points Total",
+    caption = "@jhackmeister.bsky.social"
   )
 
 ggplot(pac_div, aes(x = gp, y = ppg, color = team)) +
@@ -130,13 +140,16 @@ ggplot(pac_div, aes(x = gp, y = ppg, color = team)) +
     asp = 1.0,
     inherit.aes = FALSE
   ) +
-  geom_hline(yintercept = 0.5, linetype = "dashed", color = "black") +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "darkorange") +
   scale_color_manual(values = team_colors) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 5)) +
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 10)) +
   theme_minimal() +
-  theme(legend.position = "none") +
+  #theme(legend.position = "bottom") +
   labs(
     title = "2025-26 Pacific Division Standings",
     subtitle = "Data from Hockey Reference",
     x = "Games Played",
-    y = "Points Above Point Per Game Pace"
+    y = "Points Above Point Per Game Pace",
+    caption = "@jhackmeister.bsky.social"
   )

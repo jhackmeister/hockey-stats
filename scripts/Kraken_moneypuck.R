@@ -1,5 +1,4 @@
 library(tidyverse)
-thisyear <- read.csv("https://moneypuck.com/moneypuck/playerData/seasonSummary/2025/regular/teams.csv")
 kraken <- read.csv("https://moneypuck.com/moneypuck/playerData/careers/gameByGame/regular/teams/SEA.csv")
 
 kraken_all <- kraken %>% 
@@ -32,7 +31,7 @@ ggplot(kraken_all, aes(x = games_played, y = rebound_diff, color = season)) +
   geom_line(linewidth = 1.3) +
   geom_hline(yintercept = 0, linetype = "dashed", color = "black") +
   scale_color_manual(values = season_colors) +
-  theme_minimal() +
+  theme_light() +
   labs(
     title = "Kraken Running Rebound Differential by Season",
     subtitle = "Data from Hockey Reference",
@@ -57,7 +56,7 @@ ggplot(kraken_all, aes(x = games_played, y = rebound_goal_diff, color = season))
     show.legend = FALSE
   ) +
   scale_color_manual(values = season_colors) +
-  theme_minimal() +
+  theme_light() +
   theme(legend.position = "none") +
   labs(
     title = "Kraken Running Rebound Goal Differential by Season",

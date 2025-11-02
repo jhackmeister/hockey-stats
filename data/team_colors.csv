@@ -1,0 +1,35 @@
+,team,full_name,main_color,secondary_color,third_color,text_color
+1,ANA,Anaheim Ducks,#FC4C02,#B6985A,#CF45210,white
+2,ARI,Arizona Coyotes,#98012E,#e2d6b5,#e2d6b5,white
+3,BOS,Boston Bruins,#fcb514,#000000,#FFB81C,black
+4,BUF,Buffalo Sabres,#003087,#FFB81C,#FFB81C,white
+5,CAR,Carolina Hurricanes,#c8102e,#333F48,#A2AAAD,white
+6,CGY,Calgary Flames,#C8102E,#F1BE48,#F1BE48,white
+7,CHI,Chicago Blackhawks,#C8102E,#CC8A00,#FF6720,white
+8,COL,Colorado Avalanche,#6F263D,#236192,#236192,white
+9,CBJ,Columbus Blue Jackets,#041e42,#C8102E,#A2AAAD,white
+10,DAL,Dallas Stars,#00843D,#A2AAAD,#A2AAAD,white
+11,DET,Detroit Red Wings,#C8102E,#FFFFFF,#FFFFFF,white
+12,EDM,Edmonton Oilers,#00205B,#CF4520,#CF4520,white
+13,FLA,Florida Panthers,#C8102E,#041E42,#B9975B,white
+14,LAK,Los Angeles Kings,#A2AAAD,#000000,#FFFFFF,black
+15,MIN,Minnesota Wild,#154734,#A6192E,#EAAA00,white
+16,MTL,Montreal Canadiens,#A6192E,#001E62,#001E62,white
+17,NSH,Nashville Predators,#FFB81C,#041E42,#041E42,black
+18,NJD,New Jersey Devils,#C8102E,#000000,#046A38,white
+19,NYI,New York Islanders,#003087,#FC4C02,#FC4C02,white
+20,NYR,New York Rangers,#0032A0,#C8102E,#C8102E,white
+21,OTT,Ottawa Senators,#C8102E,#B9975B,#B9975B,white
+22,PHI,Philadelphia Flyers,#CF4520,#000000,#FFFFFF,white
+23,PIT,Pittsburgh Penguins,#FFB81C,#000000,#000000,black
+24,STL,St. Louis Blues,#003087,#FFB81C,#FFB81C,white
+25,SJS,San Jose Sharks,#006271,#F4901E,#F4901E,white
+26,SEA,Seattle Kraken,#051C2C,#9CDBD9,#9CDBD9,white
+27,TBL,Tampa Bay Lightning,#00205B,#FFFFFF,#FFFFFF,white
+28,TOR,Toronto Maple Leafs,#00205B,#FFFFFF,#013E7F,white
+29,UHC,Utah Hockey Club,#69b3e7,#010101,#69b3e7,black
+30,UTA,Utah Mammoth,#69b3e7,#010101,#69b3e7,black
+31,VAN,Vancouver Canucks,#00205B,#00843D,#00843D,white
+32,VGK,Vegas Golden Knights,#B9975B,#333F48,#333F48,black
+33,WAS,Washington Capitals,#C8102E,#041E42,#041E42,white
+34,WPG,Winnipeg Jets,#041E42,#004C97,#004C97,white

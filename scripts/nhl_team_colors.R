@@ -2,7 +2,7 @@
 library(tidyverse)
 
 nhl_team_colors <- tibble::tribble(
-  ~team, ~full_name, ~main_color, ~secondary_color, ~ice_blue, ~text_color,
+  ~team, ~full_name, ~main_color, ~secondary_color, ~third_color, ~text_color,
   "ANA", "Anaheim Ducks", "#FC4C02", "#B6985A", "#CF45210", "white",
   "ARI", "Arizona Coyotes", "#98012E", "#e2d6b5", "#e2d6b5", "white",
   "BOS", "Boston Bruins", "#fcb514", "#000000", "#FFB81C", "black",
@@ -32,6 +32,7 @@ nhl_team_colors <- tibble::tribble(
   "TBL", "Tampa Bay Lightning", "#00205B", "#FFFFFF", "#FFFFFF", "white",
   "TOR", "Toronto Maple Leafs", "#00205B", "#FFFFFF", "#013E7F", "white",
   "UHC", "Utah Hockey Club", "#69b3e7", "#010101", "#69b3e7", "black",
+  "UTA", "Utah Mammoth", "#69b3e7", "#010101", "#69b3e7", "black",
   "VAN", "Vancouver Canucks", "#00205B", "#00843D", "#00843D", "white",
   "VGK", "Vegas Golden Knights", "#B9975B", "#333F48", "#333F48", "black",
   "WAS", "Washington Capitals", "#C8102E", "#041E42", "#041E42", "white",
@@ -39,8 +40,12 @@ nhl_team_colors <- tibble::tribble(
 )
 
 # Create named vectors for easy use in scale_fill_manual
-team_colors_main <- setNames(nhl_team_colors$main_color, nhl_team_colors$team_code)
-team_colors_secondary <- setNames(nhl_team_colors$secondary_color, nhl_team_colors$team_code)
-team_colors_accent <- setNames(nhl_team_colors$ice_blue, nhl_team_colors$team_code)
+team_colors_main <- setNames(nhl_team_colors$main_color, nhl_team_colors$team)
+team_colors_secondary <- setNames(nhl_team_colors$secondary_color, nhl_team_colors$team)
+team_colors_accent <- setNames(nhl_team_colors$ice_blue, nhl_team_colors$team)
+
+team_color_vector <- nhl_team_colors %>% 
+  select(team, main_color)
 
 write.csv2(team_color_vector, "data/team_primary_colors.csv")
+write.csv2(nhl_team_colors, "data/team_colors.csv")

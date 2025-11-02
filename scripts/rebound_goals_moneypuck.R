@@ -33,9 +33,10 @@ ggplot(rebounds_24, aes(
   geom_point(size = 3) +
   geom_text(aes(label = team), vjust = -0.5, size = 3) +
   scale_color_manual(values = team_colors_main) +
-  geom_vline()
   theme_minimal()
 
+avg_reb_for <- round(mean(rebounds_24$total_rebound_goals_for),2)
+avg_reb_ag <- round(mean(rebounds_24$total_rebound_goals_against),2)
   
 ggplot(rebounds_24, aes(
     x = total_rebound_goals_for,
@@ -43,9 +44,9 @@ ggplot(rebounds_24, aes(
     color = team
   )) +
     geom_point(size = 3) +
-    geom_text(aes(label = team), vjust = -0.5, size = 3) +
-    geom_vline(xintercept = 32, linetype = "dashed", color = "black") +
-    geom_hline(yintercept = 32, linetype = "dashed", color = "black") +
+    geom_text(aes(label = team), vjust = -1, size = 3) +
+    geom_vline(xintercept = avg_reb_for, linetype = "dashed", color = "black") +
+    geom_hline(yintercept = avg_reb_ag, linetype = "dashed", color = "black") +
     scale_color_manual(values = team_colors_main) +
     theme_minimal() +
     theme(legend.position = "none") +
@@ -53,9 +54,14 @@ ggplot(rebounds_24, aes(
       title = "2024-25 Rebound Goals by Team",
       subtitle = "Data from MoneyPuck",
       x = "Rebound Goals For",
-      y = "Rebond Goals Against"
+      y = "Rebond Goals Against",
+      caption = "@jhackmeister.bsky.social"
     ) +
-  annotate("text", x = 25, y = 25, label = "Need More Finishers", color = "gray", size = 5) +
-  annotate("text", x = 25, y = 42, label = "Clear Your Crease", color = "gray", size = 5) +
-  annotate("text", x = 42, y = 25, label = "Opportunistic", color = "gray", size = 5) +
-  annotate("text", x = 42, y = 42, label = "Chaos Agents", color = "gray", size = 5) 
+  annotate("text", x = 25, y = 25, label = "Need More Finishers", color = "darkgray", size = 4) +
+  annotate("text", x = 25, y = 42, label = "Clear Your Crease", color = "darkgray", size = 4) +
+  annotate("text", x = 42, y = 25, label = "Opportunistic", color = "darkgray", size = 4) +
+  annotate("text", x = 42, y = 42, label = "Chaos Agents", color = "darkgray", size = 4) +
+  annotate("text", x= max(rebounds_24$total_rebound_goals_for), 
+           y = max(avg_reb_ag)+1, label = paste("Avg: ",avg_reb_for), color = "red", size = 3) +
+  annotate("text", x= avg_reb_for+1, y = max(rebounds_24$total_rebound_goals_against), 
+           label = paste("Avg: ",avg_reb_ag), color = "red", size = 3)
