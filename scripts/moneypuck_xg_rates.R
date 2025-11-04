@@ -29,7 +29,6 @@ this_year %>%
   filter(situation == "5on5") %>% 
   ggplot(aes(x = xgoals_for_p60, y =xgoals_against_p60)) +
            geom_image(aes(image = logo), size = 0.05) +
-  geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "red") +
   theme_minimal() +
            theme(plot.title = element_text(color = "#68a2b9", face = 'bold'),
                          plot.caption = element_text(color = "#355464", face = 'bold')) +
